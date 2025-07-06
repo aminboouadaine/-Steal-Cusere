@@ -1,11 +1,3 @@
---[[
-  Solara Ultra Hub - Modern Tabbed GUI (English Only)
-  Tabs: Modes | Teleport | Settings
-  All features: Reliable, undetectable, instant toggles, beautiful design.
-  Author: AI Custom for User
---]]
-
--- Roblox Services
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
@@ -19,7 +11,6 @@ local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 local root = character:WaitForChild("HumanoidRootPart")
 
--- Splash Animation (يجب أن يكون أول شيء)
 if not _G.__STEAL_SCRIPT_SPLASH_SHOWN then
     print("Splash Start")
     _G.__STEAL_SCRIPT_SPLASH_SHOWN = true
@@ -37,13 +28,11 @@ if not _G.__STEAL_SCRIPT_SPLASH_SHOWN then
     overlay.BackgroundTransparency = 1
     overlay.Parent = introGui
     overlay.ZIndex = 1000
-    -- Fade In للشاشة السوداء
     for t=1,0,-0.1 do
         overlay.BackgroundTransparency = t
         wait(0.03)
     end
     overlay.BackgroundTransparency = 0
-    -- نص متحرك Welcome مع تدرج لون وحركة Zoom
     local mainText = Instance.new("TextLabel")
     mainText.Size = UDim2.new(0, 600, 0, 80)
     mainText.Position = UDim2.new(0.5, -300, 0.45, -40)
@@ -65,11 +54,10 @@ if not _G.__STEAL_SCRIPT_SPLASH_SHOWN then
     local fullText = "Welcome To Steal Script"
     for i=1,#fullText do
         mainText.Text = string.sub(fullText,1,i)
-        mainText.TextSize = 54 + i*0.7 -- Zoom In بسيط
+        mainText.TextSize = 54 + i*0.7
         wait(0.04)
     end
     mainText.TextSize = 64
-    -- توقيع المطور Fade In
     local devText = Instance.new("TextLabel")
     devText.Size = UDim2.new(0, 260, 0, 32)
     devText.Position = UDim2.new(1, -270, 1, -40)
@@ -90,7 +78,6 @@ if not _G.__STEAL_SCRIPT_SPLASH_SHOWN then
         wait(0.04)
     end
     devText.TextTransparency = 0
-    -- شريط تحميل متدرج مع وميض
     local barBG = Instance.new("Frame")
     barBG.Size = UDim2.new(0, 320, 0, 14)
     barBG.Position = UDim2.new(0.5, -160, 0.62, 0)
@@ -131,7 +118,6 @@ if not _G.__STEAL_SCRIPT_SPLASH_SHOWN then
         wait(0.045)
     end
     wait(3)
-    -- Fade Out لكل العناصر
     for t=0,1,0.08 do
         overlay.BackgroundTransparency = t
         mainText.TextTransparency = t
@@ -149,25 +135,22 @@ if not _G.__STEAL_SCRIPT_SPLASH_SHOWN then
     print("Splash End")
 end
 
--- Settings
 local SPEED_MULT = 2
 local FLY_SPEED = 60
 local SKY_HEIGHT = 10
-local THEME_COLOR = Color3.fromRGB(220, 220, 240) -- luminous grayish white
-local DARK_BG = Color3.fromRGB(200, 200, 210) -- light gray background
-local BUTTON_ON = Color3.fromRGB(230, 230, 240) -- lighter gray
-local BUTTON_OFF = Color3.fromRGB(180, 180, 190) -- medium gray
-local BUTTON_ON_TXT = Color3.fromRGB(255, 255, 255) -- white
-local BUTTON_OFF_TXT = Color3.fromRGB(220, 220, 240) -- luminous grayish white
+local THEME_COLOR = Color3.fromRGB(220, 220, 240)
+local DARK_BG = Color3.fromRGB(200, 200, 210)
+local BUTTON_ON = Color3.fromRGB(230, 230, 240)
+local BUTTON_OFF = Color3.fromRGB(180, 180, 190)
+local BUTTON_ON_TXT = Color3.fromRGB(255, 255, 255)
+local BUTTON_OFF_TXT = Color3.fromRGB(220, 220, 240)
 
--- تحديث ألوان وتدرجات الأزرار
 local BUTTON_GRADIENT = ColorSequence.new{
     ColorSequenceKeypoint.new(0, Color3.fromRGB(255,255,255)),
     ColorSequenceKeypoint.new(1, Color3.fromRGB(220,220,240))
 }
 local BUTTON_SHADOW = Color3.fromRGB(210,210,220)
 
--- Anti-Detection: Randomize GUI/var names
 local function randomName(len)
     local chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     local s = ""
@@ -180,7 +163,6 @@ end
 local guiName = randomName(12)
 local frameName = randomName(10)
 
--- Main GUI (حجم ثابت، غير قابل للتغيير)
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = guiName
 ScreenGui.Parent = CoreGui
@@ -188,7 +170,7 @@ ScreenGui.ResetOnSpawn = false
 
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = frameName
-MainFrame.Size = UDim2.new(0, 700, 0, 520) -- حجم ثابت متوسط
+MainFrame.Size = UDim2.new(0, 700, 0, 520)
 MainFrame.Position = UDim2.new(0.5, -350, 0.5, -260)
 MainFrame.BackgroundColor3 = Color3.fromRGB(220, 220, 240)
 MainFrame.BorderSizePixel = 0
@@ -196,7 +178,7 @@ MainFrame.BackgroundTransparency = 0.06
 MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 MainFrame.Parent = ScreenGui
 MainFrame.Active = true
-MainFrame.Draggable = true -- الآن قابل للسحب
+MainFrame.Draggable = true
 
 local UICorner = Instance.new("UICorner", MainFrame)
 UICorner.CornerRadius = UDim.new(0, 28)
@@ -214,12 +196,10 @@ UIGradient.Color = ColorSequence.new{
 }
 UIGradient.Rotation = 45
 
--- إزالة مقبض تغيير الحجم إذا كان موجود
 if MainFrame:FindFirstChildOfClass("Frame") then
     MainFrame:FindFirstChildOfClass("Frame"):Destroy()
 end
 
--- ترتيب التبويبات في الأعلى بشكل متناسق (بدون Homes)
 local tabs = {"Modes", "Movement", "Teleport", "Settings"}
 local tabFrames = {}
 local currentTab = 1
@@ -281,7 +261,6 @@ for i,tab in ipairs(tabs) do
     end)
 end
 
--- تحديث حجم وإطار القوائم الداخلية (Frames/ScrollingFrames)
 local function makeScroll(frame)
     local scroll = Instance.new("ScrollingFrame")
     scroll.Size = UDim2.new(1, 0, 1, 0)
@@ -304,7 +283,6 @@ local modeScroll, modeLayout = makeScroll(tabFrames[1])
 local tpScroll, tpLayout = makeScroll(tabFrames[2])
 local setScroll, setLayout = makeScroll(tabFrames[3])
 
--- تحديث زر التبديل (Toggle) ليكون عصري وجميل
 local function createToggle(parent, text, callback)
     local btn = Instance.new("TextButton")
     btn.Size = UDim2.new(1, 0, 0, 40)
@@ -353,20 +331,17 @@ local function createToggle(parent, text, callback)
     end
 end
 
--- MODES TAB FEATURES (Noclip, Fly, Speed, Sky, Super Jump, Infinite Jump, ESP, X-Ray, Night Vision, FOV, Gravity, No Fall Damage)
 local toggles = {}
 local origWalkSpeed = humanoid.WalkSpeed
 local origJumpPower = humanoid.JumpPower
 local origFOV = workspace.CurrentCamera.FieldOfView
 local origGravity = Workspace.Gravity
 
--- Helper: Add toggle to scrollable list
 local function addModeToggle(name, func)
     local btn, isOn, setOn = createToggle(modeScroll, name, func)
     toggles[name] = {isOn=isOn, setOn=setOn, btn=btn}
 end
 
--- زر X لإخفاء الـGUI فقط
 local closeBtn = Instance.new("TextButton")
 closeBtn.Size = UDim2.new(0, 32, 0, 32)
 closeBtn.Position = UDim2.new(1, -38, 0, 6)
@@ -382,7 +357,6 @@ closeBtn.MouseButton1Click:Connect(function()
     ScreenGui.Enabled = false
 end)
 
--- Noclip متطور جداً (تجاوز حماية السيرفر، مستحيل ينكشف)
 local noclipConn = nil
 local fakeWalkConn = nil
 addModeToggle("Noclip", function(on)
@@ -391,36 +365,29 @@ addModeToggle("Noclip", function(on)
     if on then
         local origSpeed = humanoid.WalkSpeed
         humanoid.WalkSpeed = origSpeed * 0.7
-        -- تعطيل التصادم محلياً
         noclipConn = RunService.Stepped:Connect(function(_, step)
             for _, v in ipairs(character:GetDescendants()) do
                 if v:IsA("BasePart") then
                     v.CanCollide = false
                 end
             end
-            -- تأخير بسيط في تحديث مكان اللاعب (Delay)
             if humanoid.MoveDirection.Magnitude > 0 then
-                wait(0.08 + math.random()*0.04) -- دلاي عشوائي خفيف
+                wait(0.08 + math.random()*0.04)
             end
         end)
-        -- خداع السيرفر: إرسال مواقع وهمية وكأن اللاعب يمشي طبيعي
         local lastServerPos = root.Position
         fakeWalkConn = RunService.Heartbeat:Connect(function()
             if humanoid.MoveDirection.Magnitude > 0 then
-                -- احسب اتجاه الحركة الطبيعي
                 local moveDir = humanoid.MoveDirection.Unit
                 local fakeStep = moveDir * (origSpeed * 0.7) * (0.13 + math.random()*0.03)
                 lastServerPos = lastServerPos + fakeStep
-                -- خداع السيرفر: تحديث CFrame وهمي (لا تغير الحقيقي)
                 pcall(function()
                     root.CFrame = CFrame.new(root.Position, root.Position + moveDir)
-                    -- أرسل حدث وهمي للسيرفر (لو فيه RemoteEvents)
                     if root:FindFirstChild("RootRigAttachment") then
                         root.RootRigAttachment.WorldPosition = lastServerPos
                     end
                 end)
             end
-            -- دائماً خلي السيرفر يظن أنك على الأرض
             humanoid:SetStateEnabled(Enum.HumanoidStateType.FallingDown, false)
             humanoid:SetStateEnabled(Enum.HumanoidStateType.Physics, false)
             humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, false)
@@ -438,7 +405,6 @@ addModeToggle("Noclip", function(on)
     end
 end)
 
--- تحسين Fly: Shift للنزول، Space للصعود
 local flyConn, flyVel
 addModeToggle("Fly", function(on)
     if flyConn then flyConn:Disconnect() end
@@ -461,7 +427,6 @@ addModeToggle("Fly", function(on)
     end
 end)
 
--- Phase Dash (اندفاع للأمام عبر الجدار عند الضغط على Q)
 local phaseDashConn
 addModeToggle("Phase Dash (Q)", function(on)
     if phaseDashConn then phaseDashConn:Disconnect() end
@@ -475,7 +440,6 @@ addModeToggle("Phase Dash (Q)", function(on)
     end
 end)
 
--- Ghost Body (تصبح شفاف جداً عند التفعيل)
 addModeToggle("Ghost Body", function(on)
     for _,v in ipairs(character:GetDescendants()) do
         if v:IsA("BasePart") then
@@ -484,7 +448,6 @@ addModeToggle("Ghost Body", function(on)
     end
 end)
 
--- Wall Stick (تلتصق بالجدار عند التفعيل وتتحرر عند الضغط على G)
 local wallStickConn, stuck = nil, false
 addModeToggle("Wall Stick (G)", function(on)
     if wallStickConn then wallStickConn:Disconnect() end
@@ -509,12 +472,10 @@ addModeToggle("Wall Stick (G)", function(on)
     end
 end)
 
--- Speed
 addModeToggle("Speed x1.5", function(on)
     humanoid.WalkSpeed = on and origWalkSpeed * SPEED_MULT or origWalkSpeed
 end)
 
--- Sky
 local skyConn
 addModeToggle("Sky", function(on)
     if skyConn then skyConn:Disconnect() end
@@ -537,12 +498,10 @@ addModeToggle("Sky", function(on)
     end
 end)
 
--- Super Jump
 addModeToggle("Super Jump", function(on)
     humanoid.JumpPower = on and 200 or origJumpPower
 end)
 
--- Infinite Jump
 local infJumpConn
 addModeToggle("Infinite Jump", function(on)
     if infJumpConn then infJumpConn:Disconnect() end
@@ -553,7 +512,6 @@ addModeToggle("Infinite Jump", function(on)
     end
 end)
 
--- ESP (Box + Name + Line, Local Only, Undetectable)
 addModeToggle("ESP", function(on)
     for _,plr in ipairs(Players:GetPlayers()) do
         if plr ~= player and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
@@ -576,7 +534,6 @@ addModeToggle("ESP", function(on)
                     end
                 end
             end
-            -- Name ESP
             if on then
                 if not plr.Character:FindFirstChild("espName") then
                     local b = Instance.new("BillboardGui")
@@ -598,7 +555,6 @@ addModeToggle("ESP", function(on)
             else
                 if plr.Character:FindFirstChild("espName") then plr.Character.espName:Destroy() end
             end
-            -- Line ESP
             if on then
                 if not plr.Character:FindFirstChild("espLine") then
                     local a = Instance.new("Attachment", workspace.CurrentCamera)
@@ -624,7 +580,6 @@ addModeToggle("ESP", function(on)
     end
 end)
 
--- X-Ray
 addModeToggle("X-Ray", function(on)
     for _,v in ipairs(Workspace:GetDescendants()) do
         if v:IsA("BasePart") and v.Transparency < 0.5 and not v:IsDescendantOf(character) then
@@ -633,7 +588,6 @@ addModeToggle("X-Ray", function(on)
     end
 end)
 
--- Night Vision
 addModeToggle("Night Vision", function(on)
     if on then
         Lighting.Brightness = 4
@@ -644,17 +598,14 @@ addModeToggle("Night Vision", function(on)
     end
 end)
 
--- FOV
 addModeToggle("FOV x1.5", function(on)
     workspace.CurrentCamera.FieldOfView = on and origFOV * 1.5 or origFOV
 end)
 
--- Gravity
 addModeToggle("Low Gravity", function(on)
     Workspace.Gravity = on and 30 or origGravity
 end)
 
--- No Fall Damage
 local noFallConn
 addModeToggle("No Fall Damage", function(on)
     if noFallConn then noFallConn:Disconnect() end
@@ -667,7 +618,6 @@ addModeToggle("No Fall Damage", function(on)
     end
 end)
 
--- TELEPORT TAB
 local function addTpButton(text, callback)
     local btn = Instance.new("TextButton")
     btn.Size = UDim2.new(1, 0, 0, 32)
@@ -709,13 +659,11 @@ addTpButton("Teleport to Player (Choose)", function()
         end
     end
     if #plrs > 0 then
-        -- Simple: teleport to first found (can be improved to show a list)
         local tPlr = plrs[1]
         root.CFrame = tPlr.Character.HumanoidRootPart.CFrame + Vector3.new(0,3,0)
     end
 end)
 
--- SETTINGS TAB
 local function addSetButton(text, callback)
     local btn = Instance.new("TextButton")
     btn.Size = UDim2.new(1, 0, 0, 32)
@@ -731,7 +679,6 @@ local function addSetButton(text, callback)
     return btn
 end
 
--- Hotkey for GUI (Ctrl default, changeable)
 local guiHotkey = Enum.KeyCode.LeftControl
 local hotkeyBtn = addSetButton("Set GUI Hotkey (Default: Ctrl)", function()
     hotkeyBtn.Text = "Press any key..."
@@ -749,7 +696,6 @@ UserInputService.InputBegan:Connect(function(input, gpe)
     end
 end)
 
--- Night Vision/Sky toggle logic
 local origSky = nil
 addSetButton("Night Vision+", function()
     Lighting.Brightness = 6
@@ -769,11 +715,9 @@ addSetButton("Restore Sky", function()
     Lighting.OutdoorAmbient = Color3.new(0.5,0.5,0.5)
 end)
 
--- Silent Walk (Local Only)
 addModeToggle("Silent Walk", function(on)
     if on then
         humanoid.WalkSpeed = origWalkSpeed * 0.7
-        -- Optionally: mute footstep sounds (if any)
         for _,v in ipairs(character:GetDescendants()) do
             if v:IsA("Sound") and v.Name:lower():find("step") then v.Volume = 0 end
         end
@@ -785,7 +729,6 @@ addModeToggle("Silent Walk", function(on)
     end
 end)
 
--- Auto Loot (Local Only)
 local lootConn
 addModeToggle("Auto Loot", function(on)
     if lootConn then lootConn:Disconnect() end
@@ -803,7 +746,6 @@ addModeToggle("Auto Loot", function(on)
     end
 end)
 
--- Wall Peek (Local Only)
 local peekConn
 addModeToggle("Wall Peek", function(on)
     if peekConn then peekConn:Disconnect() end
@@ -827,7 +769,6 @@ addModeToggle("Wall Peek", function(on)
     end
 end)
 
--- تحسين شريط التمرير في مودات
 modeScroll.ScrollBarImageColor3 = Color3.fromRGB(120,200,255)
 modeScroll.ScrollBarThickness = 4
 modeScroll.BackgroundTransparency = 0.1
@@ -841,7 +782,6 @@ setScroll.ScrollBarThickness = 4
 setScroll.BackgroundTransparency = 0.1
 setScroll.BackgroundColor3 = Color3.fromRGB(25, 30, 40)
 
--- تحديث أزرار التفعيل
 local function styleToggle(btn, on)
     btn.BackgroundColor3 = on and Color3.fromRGB(230, 230, 240) or Color3.fromRGB(180, 180, 190)
     btn.TextColor3 = on and Color3.fromRGB(255,255,255) or Color3.fromRGB(220,220,240)
@@ -854,7 +794,6 @@ for _,t in pairs(toggles) do
     end)
 end
 
--- Notification function (as before)
 local function notify(msg, color)
     local n = Instance.new("TextLabel")
     n.Parent = MainFrame
@@ -879,7 +818,6 @@ local function notify(msg, color)
     end)
 end
 
--- Re-apply features on respawn
 player.CharacterAdded:Connect(function(char)
     character = char
     humanoid = character:WaitForChild("Humanoid")
@@ -890,6 +828,3 @@ player.CharacterAdded:Connect(function(char)
     origGravity = Workspace.Gravity
     for _,t in pairs(toggles) do t.setOn(false) end
 end)
-
--- End of base structure. More features will be added in next steps.
- 
